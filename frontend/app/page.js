@@ -45,7 +45,7 @@ export default function Home() {
 
     try {
       const response = await fetch(
-        "http://192.168.31.180:9000/history?page=1&limit=20"
+        "https://scamshield-backend-jqmi.onrender.com/history?page=1&limit=20"
       );
 
       if (!response.ok) {
@@ -82,7 +82,7 @@ export default function Home() {
 
     try {
       const response = await fetch(
-        `http://192.168.31.180:9000/history/${id}`,
+        `https://scamshield-backend-jqmi.onrender.com/history/${id}`,
         {
           method: "DELETE",
         }
@@ -133,7 +133,7 @@ export default function Home() {
 
     try {
       const response = await fetch(
-        "http://192.168.31.180:9000/history",
+        "https://scamshield-backend-jqmi.onrender.com/history",
         {
           method: "DELETE",
         }
@@ -181,7 +181,7 @@ export default function Home() {
     setError("");
 
     try {
-      const response = await fetch("http://192.168.31.180:9000/analyze", {
+      const response = await fetch("https://scamshield-backend-jqmi.onrender.com/analyze", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -591,7 +591,7 @@ export default function Home() {
                   onSelect={async () => {
                     try {
                       const response = await fetch(
-                        `http://192.168.31.180:9000/history/${item.id}`
+                        `https://scamshield-backend-jqmi.onrender.com/history/${item.id}`
                       );
 
                       if (!response.ok) {
