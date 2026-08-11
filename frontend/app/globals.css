@@ -1,0 +1,588 @@
+@import "tailwindcss";
+
+:root {
+  --background: #05070b;
+  --foreground: #ededed;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* ============================================================
+   BASE
+============================================================ */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ============================================================
+   SELECTION
+============================================================ */
+
+::selection {
+  background: rgba(16, 185, 129, 0.3);
+  color: white;
+}
+
+/* ============================================================
+   SCROLLBAR
+============================================================ */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #05070b;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(16, 185, 129, 0.25);
+  border-radius: 999px;
+  border: 2px solid #05070b;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(16, 185, 129, 0.5);
+}
+
+/* ============================================================
+   AMBIENT BACKGROUND
+============================================================ */
+
+.security-background {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.security-background::before {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  background:
+    radial-gradient(circle at 50% 15%,
+      rgba(16, 185, 129, 0.09),
+      transparent 28%),
+    radial-gradient(circle at 15% 60%,
+      rgba(6, 182, 212, 0.035),
+      transparent 25%),
+    radial-gradient(circle at 85% 70%,
+      rgba(16, 185, 129, 0.035),
+      transparent 25%);
+  animation: ambientDrift 14s ease-in-out infinite alternate;
+}
+
+.security-background::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px,
+      transparent 1px),
+    linear-gradient(90deg,
+      rgba(255, 255, 255, 0.025) 1px,
+      transparent 1px);
+  background-size: 55px 55px;
+  mask-image: linear-gradient(to bottom,
+      black,
+      transparent 75%);
+}
+
+@keyframes ambientDrift {
+  0% {
+    transform: translate3d(-1%, -1%, 0) scale(1);
+  }
+
+  100% {
+    transform: translate3d(1%, 1%, 0) scale(1.05);
+  }
+}
+
+/* ============================================================
+   PAGE ENTRANCE
+============================================================ */
+
+.page-enter {
+  animation: pageEnter 0.8s ease-out both;
+}
+
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================================
+   FLOATING GLOW
+============================================================ */
+
+.float-glow {
+  animation: floatGlow 6s ease-in-out infinite;
+}
+
+@keyframes floatGlow {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* ============================================================
+   LOGO / SHIELD GLOW
+============================================================ */
+
+.shield-glow {
+  animation:
+    shieldPulse 3s ease-in-out infinite,
+    floatGlow 6s ease-in-out infinite;
+}
+
+@keyframes shieldPulse {
+
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 rgba(16, 185, 129, 0),
+      0 0 25px rgba(16, 185, 129, 0.04);
+  }
+
+  50% {
+    box-shadow:
+      0 0 35px rgba(16, 185, 129, 0.12),
+      0 0 70px rgba(16, 185, 129, 0.05);
+  }
+}
+
+/* ============================================================
+   BUTTON SHINE
+============================================================ */
+
+.button-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.button-shine::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 70%;
+  height: 100%;
+  background: linear-gradient(110deg,
+      transparent,
+      rgba(255, 255, 255, 0.3),
+      transparent);
+  transform: skewX(-20deg);
+  transition: left 0.7s ease;
+}
+
+.button-shine:hover::after {
+  left: 140%;
+}
+
+/* ============================================================
+   SCANNER
+============================================================ */
+
+.scan-progress {
+  width: 35%;
+  animation: scanProgress 1.8s ease-in-out infinite;
+  box-shadow:
+    0 0 12px rgba(16, 185, 129, 0.45),
+    0 0 25px rgba(16, 185, 129, 0.15);
+}
+
+@keyframes scanProgress {
+  0% {
+    transform: translateX(-120%);
+    width: 25%;
+  }
+
+  50% {
+    width: 45%;
+  }
+
+  100% {
+    transform: translateX(330%);
+    width: 25%;
+  }
+}
+
+/* ============================================================
+   SCANNER GRID / RADAR
+============================================================ */
+
+.scanner-radar {
+  position: relative;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 1px solid rgba(16, 185, 129, 0.15);
+  box-shadow:
+    inset 0 0 20px rgba(16, 185, 129, 0.03),
+    0 0 25px rgba(16, 185, 129, 0.04);
+}
+
+.scanner-radar::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border-radius: 50%;
+  border: 1px solid rgba(16, 185, 129, 0.1);
+}
+
+.scanner-radar::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1px;
+  height: 45%;
+  transform-origin: bottom;
+  background: linear-gradient(to top,
+      rgba(16, 185, 129, 0.7),
+      transparent);
+  animation: radarSweep 2s linear infinite;
+}
+
+@keyframes radarSweep {
+  from {
+    transform: translate(-50%, -100%) rotate(0deg);
+  }
+
+  to {
+    transform: translate(-50%, -100%) rotate(360deg);
+  }
+}
+
+/* ============================================================
+   SECURITY PULSE
+============================================================ */
+
+.security-pulse {
+  animation: securityPulse 2.5s ease-in-out infinite;
+  box-shadow: 0 0 0 rgba(16, 185, 129, 0);
+}
+
+@keyframes securityPulse {
+
+  0%,
+  100% {
+    opacity: 0.65;
+    box-shadow: 0 0 0 rgba(16, 185, 129, 0);
+  }
+
+  50% {
+    opacity: 1;
+    box-shadow:
+      0 0 10px rgba(16, 185, 129, 0.7),
+      0 0 18px rgba(16, 185, 129, 0.2);
+  }
+}
+
+/* ============================================================
+   RISK NUMBER
+============================================================ */
+
+.risk-number {
+  animation: riskReveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes riskReveal {
+  0% {
+    opacity: 0;
+    transform: scale(0.7);
+    filter: blur(10px);
+  }
+
+  65% {
+    opacity: 1;
+    transform: scale(1.06);
+    filter: blur(0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ============================================================
+   RISK BAR
+============================================================ */
+
+.risk-bar {
+  animation: riskBarReveal 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transform-origin: left;
+}
+
+@keyframes riskBarReveal {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* ============================================================
+   CARD INTERACTION
+============================================================ */
+
+.security-card {
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.security-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(16, 185, 129, 0.12);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.2),
+    0 0 30px rgba(16, 185, 129, 0.025);
+}
+
+/* ============================================================
+   RESULT REVEAL
+============================================================ */
+
+.result-reveal {
+  animation: resultReveal 0.55s ease-out both;
+}
+
+@keyframes resultReveal {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+    filter: blur(3px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* ============================================================
+   STAGGERED RESULTS
+============================================================ */
+
+.stagger-item {
+  opacity: 0;
+  animation: staggerIn 0.5s ease-out forwards;
+}
+
+.stagger-item:nth-child(1) {
+  animation-delay: 0.05s;
+}
+
+.stagger-item:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.stagger-item:nth-child(3) {
+  animation-delay: 0.15s;
+}
+
+.stagger-item:nth-child(4) {
+  animation-delay: 0.2s;
+}
+
+.stagger-item:nth-child(5) {
+  animation-delay: 0.25s;
+}
+
+.stagger-item:nth-child(6) {
+  animation-delay: 0.3s;
+}
+
+@keyframes staggerIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================================
+   THREAT ALERT
+============================================================ */
+
+.threat-alert {
+  animation: threatAlert 2.5s ease-in-out infinite;
+}
+
+@keyframes threatAlert {
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 rgba(239, 68, 68, 0);
+  }
+
+  50% {
+    box-shadow:
+      0 0 25px rgba(239, 68, 68, 0.06),
+      inset 0 0 25px rgba(239, 68, 68, 0.02);
+  }
+}
+
+/* ============================================================
+   TEXT GLOW
+============================================================ */
+
+.text-glow {
+  text-shadow:
+    0 0 20px rgba(16, 185, 129, 0.15),
+    0 0 40px rgba(16, 185, 129, 0.05);
+}
+
+/* ============================================================
+   CYBER LINE
+============================================================ */
+
+.cyber-line {
+  position: relative;
+  overflow: hidden;
+}
+
+.cyber-line::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(16, 185, 129, 0.18),
+      transparent);
+  animation: cyberLine 3s ease-in-out infinite;
+}
+
+@keyframes cyberLine {
+
+  0%,
+  35% {
+    transform: translateX(-100%);
+  }
+
+  70%,
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* ============================================================
+   LOADING DOT
+============================================================ */
+
+.loading-dot {
+  animation: loadingDot 1.2s ease-in-out infinite;
+}
+
+@keyframes loadingDot {
+
+  0%,
+  100% {
+    transform: scale(0.75);
+    opacity: 0.4;
+  }
+
+  50% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+}
+
+/* ============================================================
+   FOCUS STATES
+============================================================ */
+
+textarea:focus,
+input:focus,
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid rgba(16, 185, 129, 0.45);
+  outline-offset: 3px;
+}
+
+/* ============================================================
+FLOATING SCAN BUTTON
+============================================================ */
+
+.scan-floating-button {
+  animation: floatingScan 3s ease-in-out infinite;
+}
+
+@keyframes floatingScan {
+
+  0%,
+  100% {
+    box-shadow:
+      0 10px 35px rgba(0, 0, 0, 0.35),
+      0 0 0 rgba(16, 185, 129, 0);
+  }
+
+  50% {
+    box-shadow:
+      0 14px 45px rgba(0, 0, 0, 0.4),
+      0 0 25px rgba(16, 185, 129, 0.08);
+  }
+}
+
+/* ============================================================
+   REDUCED MOTION
+============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
