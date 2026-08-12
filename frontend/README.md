@@ -4,6 +4,10 @@
 
 The application combines **rule-based cybersecurity analysis** with **AI-powered analysis** to provide users with a risk score, verdict, detected indicators, and detailed explanations.
 
+## 🚀 Live Demo
+
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-ScamShield-blue?style=for-the-badge)](https://scam-shield-two-zeta.vercel.app/)
+
 ---
 
 ## 🚀 Features
