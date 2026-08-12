@@ -18,7 +18,7 @@ import json
 import os
 import re
 import time
-
+import certifi
 
 # ============================================================
 # ENVIRONMENT
@@ -83,7 +83,6 @@ else:
     print(" AI analysis will be unavailable.")
     print("======================================")
 
-
 # ============================================================
 # MONGODB
 # ============================================================
@@ -99,16 +98,24 @@ if MONGODB_URI:
 
         mongo_client = MongoClient(
             MONGODB_URI,
-            serverSelectionTimeoutMS=5000,
-            connectTimeoutMS=5000,
-            socketTimeoutMS=5000
+
+            # Explicitly enable TLS
+            tls=True,
+
+            # Use certifi's trusted CA certificates
+            tlsCAFile=certifi.where(),
+
+            # Connection timeouts
+            serverSelectionTimeoutMS=10000,
+            connectTimeoutMS=10000,
+            socketTimeoutMS=10000
         )
 
         mongo_db = mongo_client[MONGODB_DATABASE]
 
         analyses_collection = mongo_db["analyses"]
 
-        # Test connection
+        # Test MongoDB connection
         mongo_client.admin.command("ping")
 
         mongodb_available = True
@@ -116,6 +123,7 @@ if MONGODB_URI:
         print("======================================")
         print(" MongoDB connection successful")
         print(f" Database: {MONGODB_DATABASE}")
+        print(" TLS certificates: certifi")
         print("======================================")
 
         # ====================================================
